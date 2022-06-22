@@ -1,0 +1,5 @@
+
+$(function(){ 
+    $('#header').load("/header");
+}); 
+

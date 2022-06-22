@@ -3,9 +3,16 @@
 	<head> 
 	    <title>Getting Started: Study</title> 
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    <script type="text/javascript" 
+        	th:src="@{/javaScripts/ext/jquery-3.6.0-min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/include-header.js}"></script>
+		<script type="text/javascript" th:src="@{/js/index.js}"></script>
 	</head>
+	
 	<body>
+		<div id="header"></div>
 	    <p>Get your greeting <a href="/greeting">here</a></p>
 	    <p>Get your database check <a href="/dbconn">here</a></p>
+		<div id="footer"></div>
 	</body>
 </html>
