@@ -2,8 +2,6 @@ package com.fdu.capstone.viewcontrollers;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fdu.capstone.models.testConnObj;
-
-import jdk.incubator.vector.VectorOperators.Test;
 
 @Controller
 public class DbconnController {
@@ -34,7 +30,7 @@ public class DbconnController {
 	public @ResponseBody testConnObj onClick(@RequestBody String jsonString) {
 		JSONObject object = new JSONObject(jsonString);
 		String query = object.getString("query");
-//		System.out.println("------" + query + "-------");
+		System.out.println("------" + object + "-------");
 		List<testConnObj> result = jdbcTemplate.query(query, 
 				BeanPropertyRowMapper.newInstance(testConnObj.class));
 		return result.get(0);

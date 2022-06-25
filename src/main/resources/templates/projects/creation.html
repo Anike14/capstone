@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+<head> 
+    <title>Project Creation</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <script type="text/javascript" 
+      	th:src="@{/js/ext/jquery-3.6.0-min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/projects/creation.js}"></script>
+</head>
+	
+<h1>Create Your Project</h1>
+
+<form id="project-detail">
+  <label for="ProjectName">ProjectName:</label>
+  <input type="text" id="ProjectName" name="ProjectName"><br><br>
+  <label for="StartedDate">Started Date:</label>
+  <input type="date" id="StartedDate" name="StartedDate"><br><br>
+  <label for="ExpectedDueDate">Expected Due Date:</label>
+  <input type="date" id="ExpectedDueDate" name="ExpectedDueDate"><br><br>
+  <label for="Difficulty">Difficulty:</label>
+  <select id="Difficulty" name="Difficulty">
+		 <option value="0">A Piece of Cake</option>
+		 <option value="1">Easy</option>
+		 <option value="2">Medium</option>
+		 <option value="3">Need Some Research</option>
+		 <option value="4">Difficult</option>
+		 <option value="5">Need Research Before Evaluate</option>
+  </select><br><br>
+  <button onclick="onClick()">submit</button>
+</form>
+
+<p>Click on the submit button, and the input will be sent to a page on the server called "action_page.php".</p>
+
+</body>
+</html>
