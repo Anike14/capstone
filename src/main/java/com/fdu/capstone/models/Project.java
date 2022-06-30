@@ -3,18 +3,18 @@ package com.fdu.capstone.models;
 import java.sql.Date;
 
 public class Project {
-	private String Owner = "master";
+	private String owner;
 	private String name;
     private Date startedDate;
     private Date expectedDueDate;
     private int difficult;
     
 	public String getOwner() {
-		return Owner;
+		return owner;
 	}
-//	public void setOwner(String owner) {
-//		Owner = owner;
-//	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
 	public String getName() {
 		return name;
 	}
