@@ -1,8 +1,4 @@
-$(document).ready(function() {
-    console.log( "ready!" );
-});
-
-function onClick() {
+function onCreateClick() {
 	let formData = $("form").serializeArray(), data = {};
 	formData.forEach(function(value){
 	    data[value.name] = value.value;
@@ -10,10 +6,10 @@ function onClick() {
 	$.ajax({
 		type: "POST",
       	contentType: "application/json",             
-      	url: "/projects/creation",
+      	url: "/createProject",
       	timeout: 6000,
       	data: JSON.stringify(data),
-		success: function () {
+		success: function (data) {
 		},
         error: function (e) {
              

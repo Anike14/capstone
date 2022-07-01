@@ -1,18 +1,21 @@
 package com.fdu.capstone.viewcontrollers.projects;
 
 import java.sql.Date;
-import java.sql.Types;
+import java.sql.PreparedStatement;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fdu.capstone.models.Project;
 import com.fdu.capstone.models.User;
 import com.fdu.capstone.viewcontrollers.UtilController;
 
@@ -36,26 +39,29 @@ public class CreationController {
 		return "/projects/creation";
 	}
 	
-	@PostMapping(value = "/projects/creation", produces="application/json")
-	public @ResponseBody void creation(@RequestBody String projectJsonString) {
-		System.out.println(projectJsonString);
+	@PostMapping(value = "/createProject", produces="application/json")
+	public @ResponseBody String creation(@RequestBody String projectJsonString) {
 		JSONObject projectJSONObject = new JSONObject(projectJsonString);
-		System.out.println(projectJSONObject);
 		User currentLoggedIn = UtilController.getCurrentLoginUser(jdbcTemplate, "MASTER", "IAmGod");
 		// define query arguments
-        Object[] params = new Object[] { 
-        		currentLoggedIn.getUid(),
-        		projectJSONObject.getString("ProjectName"), 
-        		Date.valueOf(projectJSONObject.getString("StartedDate")), 
-        		Date.valueOf(projectJSONObject.getString("ExpectedDueDate")),
-        		projectJSONObject.getInt("Difficulty")
-    	};
-        // define SQL types of the arguments
-        int[] types = new int[] { Types.CHAR, Types.VARCHAR, Types.DATE, Types.DATE, Types.INTEGER };
-        // execute insert query to insert the data
-        // return number of row / rows processed by the executed query
-        int row = jdbcTemplate.update(insertSql, params, types);
-        
-        System.out.println(row + " row inserted.");
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql, new String[]{"PID"});
+            preparedStatement.setString(1, currentLoggedIn.getUid());
+            preparedStatement.setString(2, projectJSONObject.getString("ProjectName"));
+            preparedStatement.setDate(3, Date.valueOf(projectJSONObject.getString("StartedDate")));
+            preparedStatement.setDate(4, Date.valueOf(projectJSONObject.getString("ExpectedDueDate")));
+            preparedStatement.setInt(5, projectJSONObject.getInt("Difficulty"));
+            return preparedStatement;
+        }, keyHolder);
+        for (Map<String, Object> map : keyHolder.getKeyList()) {
+        	for (Entry<String, Object> e : map.entrySet()) {
+                System.out.println("key: " + e.getKey());
+                System.out.println("value: " + e.getValue());
+        	}
+        }
+        String projectId = (String)keyHolder.getKeys().get("PID");
+        System.out.println("projectId: " + projectId);
+        return projectId;
 	}
 }
