@@ -2,21 +2,14 @@ package com.fdu.capstone.models;
 
 import java.sql.Date;
 
-public class Project {
-	private String id;
+public class Project extends ProjectBase {
+	
 	private String owner;
 	private String name;
     private Date startedDate;
     private Date expectedDueDate;
     private int difficult;
-    
-    
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 	public String getOwner() {
 		return owner;
 	}

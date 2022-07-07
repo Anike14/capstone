@@ -9,7 +9,9 @@ function onCreateClick() {
       	url: "/createProject",
       	timeout: 6000,
       	data: JSON.stringify(data),
-		success: function (data) {
+      	dataType: 'text',
+		success: function (projectId) {
+			location.href = '/projects/detail?id=' + projectId;
 		},
         error: function (e) {
              

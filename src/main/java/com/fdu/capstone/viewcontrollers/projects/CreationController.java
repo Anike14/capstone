@@ -2,11 +2,14 @@ package com.fdu.capstone.viewcontrollers.projects;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Types;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fdu.capstone.models.Project;
+import com.fdu.capstone.models.ProjectBase;
 import com.fdu.capstone.models.User;
 import com.fdu.capstone.viewcontrollers.UtilController;
 
@@ -32,6 +37,7 @@ public class CreationController {
 			" StartedDate, " +
 			" ExpectedDueDate, " +
 			" Difficulty) " +
+			" OUTPUT INSERTED.PID AS id " +
 			"VALUES (?, ?, ?, ?, ?)";
 	
 	@GetMapping(value = "/projects/creation")
@@ -44,24 +50,17 @@ public class CreationController {
 		JSONObject projectJSONObject = new JSONObject(projectJsonString);
 		User currentLoggedIn = UtilController.getCurrentLoginUser(jdbcTemplate, "MASTER", "IAmGod");
 		// define query arguments
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement preparedStatement = connection.prepareStatement(insertSql, new String[]{"PID"});
-            preparedStatement.setString(1, currentLoggedIn.getUid());
-            preparedStatement.setString(2, projectJSONObject.getString("ProjectName"));
-            preparedStatement.setDate(3, Date.valueOf(projectJSONObject.getString("StartedDate")));
-            preparedStatement.setDate(4, Date.valueOf(projectJSONObject.getString("ExpectedDueDate")));
-            preparedStatement.setInt(5, projectJSONObject.getInt("Difficulty"));
-            return preparedStatement;
-        }, keyHolder);
-        for (Map<String, Object> map : keyHolder.getKeyList()) {
-        	for (Entry<String, Object> e : map.entrySet()) {
-                System.out.println("key: " + e.getKey());
-                System.out.println("value: " + e.getValue());
-        	}
-        }
-        String projectId = (String)keyHolder.getKeys().get("PID");
-        System.out.println("projectId: " + projectId);
-        return projectId;
+        Object[] params = new Object[] { 
+    		currentLoggedIn.getUid(),
+    		projectJSONObject.getString("ProjectName"),
+    		Date.valueOf(projectJSONObject.getString("StartedDate")),
+    		Date.valueOf(projectJSONObject.getString("ExpectedDueDate")),
+    		projectJSONObject.getInt("Difficulty")
+		};
+        // define SQL types of the arguments
+        int[] types = new int[] { Types.CHAR, Types.CHAR, Types.DATE, Types.DATE, Types.INTEGER };
+        List<ProjectBase> res = jdbcTemplate.query(insertSql, params, types,
+				BeanPropertyRowMapper.newInstance(ProjectBase.class));
+        return res.get(0).getId();
 	}
 }
