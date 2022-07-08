@@ -14,7 +14,7 @@ import com.fdu.capstone.models.Project;
 import com.fdu.capstone.models.User;
 import com.fdu.capstone.viewcontrollers.UtilController;
 
-@Controller
+@Controller("ProjectListController")
 public class ListController {
 	
 	@Autowired

@@ -1,6 +1,6 @@
 package com.fdu.capstone.models;
 
-public class ProjectBase {
+public class ObjectBase {
 	private String id;
 	public String getId() {
 		return id;

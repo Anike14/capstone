@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head> 
-    <title>Project Creation</title> 
+    <title>Project Detail</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
+      	
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+	
     <script type="text/javascript" 
       	th:src="@{/js/ext/jquery-3.6.0-min.js}"></script>
     <script type="text/javascript" th:src="@{/js/projects/detail.js}"></script>
+    <script type="text/javascript" th:src="@{/js/tasks/list.js}"></script>
 </head>
-<body onload="init()">
+<body onload="projectInit()">
 <h1>Your Project: </h1>
 <form id="project-detail">
   <label for="ProjectName">ProjectName:</label>
@@ -29,5 +32,9 @@
 </form>
 <button onclick="onModifyClick()">modify</button>
 
+<div w3-include-html="/tasks"></div>
 </body>
+<script>
+	w3IncludeHTML();
+</script>
 </html>

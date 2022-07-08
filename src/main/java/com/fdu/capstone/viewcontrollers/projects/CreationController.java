@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fdu.capstone.models.Project;
-import com.fdu.capstone.models.ProjectBase;
+import com.fdu.capstone.models.ObjectBase;
 import com.fdu.capstone.models.User;
 import com.fdu.capstone.viewcontrollers.UtilController;
 
@@ -36,9 +36,10 @@ public class CreationController {
 			" PName, " +
 			" StartedDate, " +
 			" ExpectedDueDate, " +
-			" Difficulty) " +
+			" Difficulty,"
+			+ "Status) " +
 			" OUTPUT INSERTED.PID AS id " +
-			"VALUES (?, ?, ?, ?, ?)";
+			"VALUES (?, ?, ?, ?, ?, ?)";
 	
 	@GetMapping(value = "/projects/creation")
 	public String creation() {
@@ -55,12 +56,12 @@ public class CreationController {
     		projectJSONObject.getString("ProjectName"),
     		Date.valueOf(projectJSONObject.getString("StartedDate")),
     		Date.valueOf(projectJSONObject.getString("ExpectedDueDate")),
-    		projectJSONObject.getInt("Difficulty")
+    		projectJSONObject.getInt("Difficulty"), 0
 		};
         // define SQL types of the arguments
-        int[] types = new int[] { Types.CHAR, Types.CHAR, Types.DATE, Types.DATE, Types.INTEGER };
-        List<ProjectBase> res = jdbcTemplate.query(insertSql, params, types,
-				BeanPropertyRowMapper.newInstance(ProjectBase.class));
+        int[] types = new int[] { Types.CHAR, Types.CHAR, Types.DATE, Types.DATE, Types.INTEGER, Types.INTEGER };
+        List<ObjectBase> res = jdbcTemplate.query(insertSql, params, types,
+				BeanPropertyRowMapper.newInstance(ObjectBase.class));
         return res.get(0).getId();
 	}
 }

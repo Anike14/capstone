@@ -1,0 +1,21 @@
+<html>
+<head> 
+    <title>Task List</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" 
+      	th:src="@{/js/ext/jquery-3.6.0-min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/tasks/list.js}"></script>
+</head>
+<body onload="taskListInit()">
+	<button onclick="onCreateTaskClick()">create task</button>
+	<table id="TaskList" style="width:100%">
+	  <tr>
+	    <td>Task Name</td>
+	    <td>started date</td>
+	    <td>expected due date</td>
+	    <td>difficulty</td>
+	    <td>status</td>
+	  </tr>
+	</table>
+</body>
+</html>

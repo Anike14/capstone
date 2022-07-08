@@ -3,14 +3,14 @@ package com.fdu.capstone.models;
 import java.sql.Date;
 import java.util.List;
 
-public class Project extends ObjectBase {
+public class Task extends ObjectBase {
 	
 	private String owner;
 	private String name;
     private Date startedDate;
     private Date expectedDueDate;
     private int difficult;
-    private List<Task> tasks;
+    private List<Task> subTasks;
 	
 	public String getOwner() {
 		return owner;
@@ -42,10 +42,10 @@ public class Project extends ObjectBase {
 	public void setDifficult(int difficult) {
 		this.difficult = difficult;
 	}
-	public List<Task> getTasks() {
-		return tasks;
+	public List<Task> getSubTasks() {
+		return subTasks;
 	}
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+	public void setSubTasks(List<Task> subTasks) {
+		this.subTasks = subTasks;
 	}
 }

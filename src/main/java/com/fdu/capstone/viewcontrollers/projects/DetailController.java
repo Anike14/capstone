@@ -42,9 +42,11 @@ public class DetailController {
 	@GetMapping(value = "/getProjectDetail")
 	public @ResponseBody Project getProject(@RequestParam(value="id", required=true) String projectId) {
 		System.out.println(projectId);
-		Project res = jdbcTemplate.queryForObject(searchSql, BeanPropertyRowMapper.newInstance(Project.class),
+		Project project = jdbcTemplate.queryForObject(searchSql, BeanPropertyRowMapper.newInstance(Project.class),
 				new Object[]{projectId});
-		return res;
+		project.setTasks(
+				com.fdu.capstone.viewcontrollers.tasks.ListController.getTasksByParentID(jdbcTemplate, project.getId()));
+		return project;
 	}
 	
 	@PostMapping(value = "/updateProject", produces="application/json")

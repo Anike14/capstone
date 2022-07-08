@@ -2,7 +2,7 @@
  * 
  */
 
-function init() {
+function projectListInit() {
 	$.ajax({
 		type: "GET",
       	contentType: "application/json",             
