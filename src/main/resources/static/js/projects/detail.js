@@ -1,9 +1,9 @@
 /**
  * 
  */
-let project;
+var project;
 
-function projectInit() {
+function projectInit(callback) {
 	let me = this;
 	$.ajax({
 		type: "GET",
@@ -16,6 +16,7 @@ function projectInit() {
 			$("#StartedDate")[0].value = project.startedDate;
 			$("#ExpectedDueDate")[0].value = project.expectedDueDate;
 			$("#Difficulty")[0].value = project.difficult;
+			callback();
 		},
         error: function (e) {
              

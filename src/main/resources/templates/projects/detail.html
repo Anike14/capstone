@@ -8,10 +8,10 @@
 	
     <script type="text/javascript" 
       	th:src="@{/js/ext/jquery-3.6.0-min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/tasks/list.js}"></script>
     <script type="text/javascript" th:src="@{/js/projects/detail.js}"></script>
-    <script type="text/javascript" th:src="@{/js/tasks/list.js}"></script>
 </head>
-<body onload="projectInit()">
+<body onload="projectInit(taskListInit)">
 <h1>Your Project: </h1>
 <form id="project-detail">
   <label for="ProjectName">ProjectName:</label>

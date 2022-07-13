@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fdu.capstone.models.Task;
@@ -32,9 +32,9 @@ public class ListController {
 		return "/tasks/list";
 	}
 	
-	@GetMapping(value = "/getTasksList", produces="application/json")
-	public @ResponseBody List<Task> findAllTasks(@RequestBody String parentId) {
-		return getTasksByParentID(jdbcTemplate, parentId);
+	@GetMapping(value = "/getTasksList")
+	public @ResponseBody List<Task> findAllTasks(@RequestParam(value="id", required=true) String projectId) {
+		return getTasksByParentID(jdbcTemplate, projectId);
 	}
 	
 	public static List<Task> getTasksByParentID(JdbcTemplate jdbcTemplate, String id) {

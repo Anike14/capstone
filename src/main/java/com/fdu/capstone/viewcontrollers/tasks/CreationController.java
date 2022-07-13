@@ -6,10 +6,12 @@ import java.sql.Types;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+@Controller("TaskCreationController")
 public class CreationController {
 	
 	@Autowired
@@ -24,7 +26,7 @@ public class CreationController {
 				" Difficulty) " +
 				"VALUES (?, ?, ?, ?, ?)";
 	
-	@PostMapping(value = "/createProject", produces="application/json")
+	@PostMapping(value = "/createTask", produces="application/json")
 	public @ResponseBody void creation(@RequestBody String taskJSONString) {
 		JSONObject taskJSONObject = new JSONObject(taskJSONString);
 		// define query arguments

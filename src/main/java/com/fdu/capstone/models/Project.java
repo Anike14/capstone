@@ -10,7 +10,8 @@ public class Project extends ObjectBase {
     private Date startedDate;
     private Date expectedDueDate;
     private int difficult;
-    private List<Task> tasks;
+    private int status;
+	private List<Task> tasks;
 	
 	public String getOwner() {
 		return owner;
@@ -41,6 +42,12 @@ public class Project extends ObjectBase {
 	}
 	public void setDifficult(int difficult) {
 		this.difficult = difficult;
+	}
+    public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	public List<Task> getTasks() {
 		return tasks;
