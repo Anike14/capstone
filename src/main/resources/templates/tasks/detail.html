@@ -8,15 +8,15 @@
 	
     <script type="text/javascript" 
       	th:src="@{/js/ext/jquery-3.6.0-min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/tasks/list.js}"></script>
-    <script type="text/javascript" th:src="@{/js/projects/detail.js}"></script>
+    <script type="text/javascript" th:src="@{/js/tasks/detail.js}"></script>
 </head>
-<body onload="projectInit(taskListInit)">
-<h1>Your Project: </h1>
+<body onload="taskInit()">
+<a id="BackToProject" href="/projects/detail?id=" class="btn">Back</a>
+<h1>The Task: </h1>
 <input id="Status" style="border: unset; font-size: 18px;"></input><br><br>
 <form id="project-detail">
-  <label for="ProjectName">ProjectName:</label>
-  <input type="text" id="ProjectName" name="ProjectName"><br><br>
+  <label for="TaskName">TaskName:</label>
+  <input type="text" id="TaskName" name="ProjectName"><br><br>
   <label for="StartedDate">Started Date:</label>
   <input type="date" id="StartedDate" name="StartedDate"><br><br>
   <label for="ExpectedDueDate">Expected Due Date:</label>
@@ -30,12 +30,10 @@
 		 <option value="4">Difficult</option>
 		 <option value="5">Need Research Before Evaluate</option>
   </select><br><br>
+  <label for="Progress">Current Progress:</label>
+  <input type="number" id="Progress" max="100" min="0" name="ExpectedDueDate"
+  	style="width: 30px;">%<br><br>
 </form>
 <button onclick="onModifyClick()">modify</button>
-
-<div w3-include-html="/tasks"></div>
 </body>
-<script>
-	w3IncludeHTML();
-</script>
 </html>

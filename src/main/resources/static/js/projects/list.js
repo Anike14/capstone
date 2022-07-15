@@ -16,8 +16,8 @@ function projectListInit() {
 					+ project.name + '</a></td>  <td>' 
 					+ project.startedDate + '</td> <td>' 
 					+ project.expectedDueDate + '</td> <td>'
-					+ project.difficult + '</td> <td>'
-					+ project.status + '</td> </td>';
+					+ getProjectDifficulty(project.difficult) + '</td> <td>'
+					+ getProjectStatus(project.status) + '</td> </td>';
 				projectListBody.append(newTr);
 				newTr.classList.add("clickable");
 				newTr.addEventListener('click', function () {
@@ -30,4 +30,25 @@ function projectListInit() {
              
 		}
 	});
+}
+
+function getProjectDifficulty(difficulty) {
+	switch(difficulty) {
+		case 0: return 'A Piece of Cake';
+		case 1: return 'Easy';
+		case 2: return 'Medium';
+		case 3: return 'Need Some Research';
+		case 4: return 'Difficult';
+		case 5: return 'Need Research Before Evaluate';
+		default: return '';
+	}
+}
+
+function getProjectStatus(status) {
+	switch(status) {
+		case 0: return 'New';
+		case 1: return 'In Progress';
+		case 2: return 'Finished';
+		default: return '';
+	}
 }

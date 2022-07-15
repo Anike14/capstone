@@ -11,7 +11,7 @@ public class Task extends ObjectBase {
     private Date expectedDueDate;
     private int difficult;
     private int status;
-    private List<Task> subTasks;
+    private int progress;
 	
 	public String getOwner() {
 		return owner;
@@ -49,10 +49,10 @@ public class Task extends ObjectBase {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public List<Task> getSubTasks() {
-		return subTasks;
+	public int getProgress() {
+		return progress;
 	}
-	public void setSubTasks(List<Task> subTasks) {
-		this.subTasks = subTasks;
+	public void setProgress(int progress) {
+		this.progress = progress;
 	}
 }

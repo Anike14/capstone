@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fdu.capstone.models.Project;
 
-@Controller
+@Controller("ProjectDetailController")
 public class DetailController {
 
 	@Autowired
@@ -25,6 +25,7 @@ public class DetailController {
 	
 	private static final String searchSql =
 		"SELECT PID AS id, POwner AS owner, "
+		+ "STATUS AS status, "
 		+ "PName AS name, "
 		+ "StartedDate AS startedDate, "
 		+ "ExpectedDueDate AS expectedDueDate, "

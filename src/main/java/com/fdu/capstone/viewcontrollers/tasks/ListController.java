@@ -43,7 +43,6 @@ public class ListController {
         int[] types = new int[] { Types.CHAR };
         List<Task> res = jdbcTemplate.query(searchSql, params, types,
 				BeanPropertyRowMapper.newInstance(Task.class));
-        for (Task t : res) t.setSubTasks(getTasksByParentID(jdbcTemplate, t.getId()));
         return res;
 	}
 }

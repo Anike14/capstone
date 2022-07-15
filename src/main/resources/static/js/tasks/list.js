@@ -7,25 +7,29 @@ function taskListInit() {
 }
  
 function loadTasks() {
+	let taskListBodyObject = $("table#TaskList > tbody:last-child"),
+		titleBar = $("table#TaskList > tbody:last-child > tr")[0],
+		taskListBody = taskListBodyObject[0];
+	taskListBodyObject.empty();
+	taskListBody.append(titleBar);
 	$.ajax({
 		type: "GET",
       	contentType: "application/json",             
       	url: "/getTasksList?id=" + project.id,
       	timeout: 600000,
 		success: function (tasks) {
-			let taskListBody = $("table#TaskList > tbody:last-child")[0];
 			tasks.forEach(function (task) { 
 				let newTr = document.createElement('tr')
 				newTr.innerHTML = '<td>'
 					+ task.name + '</a></td>  <td>' 
 					+ task.startedDate + '</td> <td>' 
 					+ task.expectedDueDate + '</td> <td>'
-					+ task.difficult + '</td> <td>'
-					+ task.status + '</td> </td>';
+					+ getTaskDifficulty(task.difficult) + '</td> <td>'
+					+ getTaskStatus(task.status) + '</td> </td>';
 				taskListBody.append(newTr);
 				newTr.classList.add("clickable");
 				newTr.addEventListener('click', function () {
-					location.href = '/projects/detail?id=' + project.id;
+					location.href = '/tasks/detail?id=' + task.id;
 				});
 			});
 			
@@ -34,6 +38,27 @@ function loadTasks() {
              
 		}
 	});
+}
+
+function getTaskDifficulty(difficulty) {
+	switch(difficulty) {
+		case 0: return 'A Piece of Cake';
+		case 1: return 'Easy';
+		case 2: return 'Medium';
+		case 3: return 'Need Some Research';
+		case 4: return 'Difficult';
+		case 5: return 'Need Research Before Evaluate';
+		default: return '';
+	}
+}
+
+function getTaskStatus(status) {
+	switch(status) {
+		case 0: return 'New';
+		case 1: return 'In Progress';
+		case 2: return 'Finished';
+		default: return '';
+	}
 }
 
 function onCreateTaskClick() {
@@ -48,6 +73,7 @@ function onCreateTaskModalClosed() {
 
 function onCreateClick() {
 	let me = this,
+		taskModal = $("#taskCreation")[0];
 		formData = $("form").serializeArray(), data = {};
 	formData.forEach(function(value){
 	    data[value.name] = value.value;
@@ -62,6 +88,7 @@ function onCreateClick() {
       	dataType: 'text',
 		success: function () {
 			me.loadTasks();
+			taskModal.style.display = "none";
 		},
         error: function (e) {
              
