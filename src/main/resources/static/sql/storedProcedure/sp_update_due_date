@@ -10,7 +10,7 @@ BEGIN
 	set @today = getdate();
 	
 	SELECT A.PID, A.STATUS,
-	A.Progress / DATEDIFF(day, A.StartedDate, @today) AS averageProgress
+	A.Progress / ISNULL(NULLIF(DATEDIFF(day, A.StartedDate, @today), 0), 1) AS averageProgress
 	INTO #ProjectIdTobeUpdated
 	FROM Projects AS A WHERE A.STATUS IN (0, 1)
 	
@@ -25,7 +25,7 @@ BEGIN
 	ON A.PID = B.PID AND B.STATUS = 0;
 	
 	SELECT A.TID, A.STATUS,
-	A.Progress / DATEDIFF(day, A.StartedDate, @today) AS averageProgress
+	A.Progress / ISNULL(NULLIF(DATEDIFF(day, A.StartedDate, @today), 0), 1) AS averageProgress
 	INTO #TaskIdTobeUpdated
 	FROM Tasks AS A WHERE A.STATUS IN (0, 1)
 	

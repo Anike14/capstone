@@ -35,7 +35,8 @@ public class DetailController {
 		+ "FROM Tasks WHERE TID = ?";
 
 	private static final String updateSql =
-		"UPDATE Task SET TName = ?, StartedDate = ?, ExpectedDueDate = ?, Difficulty = ?, Progress = ?, Status = ?, WHERE TID = ?";
+		"UPDATE Tasks SET TName = ?, StartedDate = ?, "
+		+ "ExpectedDueDate = ?, Difficulty = ?, Progress = ?, Status = ? WHERE TID = ?";
 	
 	@GetMapping(value = "/tasks/detail")
 	public static String detail() {
