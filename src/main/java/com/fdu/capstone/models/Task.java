@@ -1,6 +1,7 @@
 package com.fdu.capstone.models;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Task extends ObjectBase {
@@ -12,6 +13,7 @@ public class Task extends ObjectBase {
     private int difficult;
     private int status;
     private int progress;
+    private List<TaskPrerequisite> prerequisites;
 	
 	public String getOwner() {
 		return owner;
@@ -54,5 +56,11 @@ public class Task extends ObjectBase {
 	}
 	public void setProgress(int progress) {
 		this.progress = progress;
+	}
+	public List<TaskPrerequisite> getPrerequisites() {
+		return prerequisites;
+	}
+	public void setPrerequisites(List<TaskPrerequisite> prerequisites) {
+		this.prerequisites = prerequisites;
 	}
 }

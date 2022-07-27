@@ -43,10 +43,12 @@ public class DetailController {
 	}
 
 	@GetMapping(value = "/getTaskDetail")
-	public @ResponseBody Task getProject(@RequestParam(value="id", required=true) String taskId) {
+	public @ResponseBody Task getTask(@RequestParam(value="id", required=true) String taskId) {
 		System.out.println(taskId);
 		Task task = jdbcTemplate.queryForObject(searchSql, BeanPropertyRowMapper.newInstance(Task.class),
-				new Object[]{taskId});
+			new Object[]{taskId});
+		task.setPrerequisites(com.fdu.capstone.viewcontrollers.
+				tasks.prerequisites.ListController.getTaskPrerequisites(jdbcTemplate, taskId));
 		return task;
 	}
 	
@@ -55,17 +57,16 @@ public class DetailController {
 		JSONObject taskJSONObject = new JSONObject(taskJsonString);
         // define query arguments
         Object[] params = new Object[] { 
-        		taskJSONObject.getString("TaskName"), 
-        		Date.valueOf(taskJSONObject.getString("StartedDate")), 
-        		Date.valueOf(taskJSONObject.getString("ExpectedDueDate")),
-        		taskJSONObject.getInt("Difficulty"),
-        		taskJSONObject.getInt("Progress"),
-        		taskJSONObject.getInt("Progress") != 0 ? 1 : 0,
-        		taskJSONObject.getString("id"),
+    		taskJSONObject.getString("TaskName"), 
+    		Date.valueOf(taskJSONObject.getString("StartedDate")), 
+    		Date.valueOf(taskJSONObject.getString("ExpectedDueDate")),
+    		taskJSONObject.getInt("Difficulty"),
+    		taskJSONObject.getInt("Progress"),
+    		taskJSONObject.getInt("Progress") != 0 ? 1 : 0,
+    		taskJSONObject.getString("id"),
     	};
         // define SQL types of the arguments
         int[] types = new int[] { Types.CHAR, Types.DATE, Types.DATE, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.CHAR };
-        
         // execute insert query to insert the data
         jdbcTemplate.update(updateSql, params, types);
 	}

@@ -1,14 +1,17 @@
 /**
  * 
  */
+var taskslist;
  
 function taskListInit() {
 	this.loadTasks();
 }
  
 function loadTasks() {
-	let taskListBodyObject = $("table#TaskList > tbody:last-child"),
+	let me = this,
+		taskListBodyObject = $("table#TaskList > tbody:last-child"),
 		titleBar = $("table#TaskList > tbody:last-child > tr")[0],
+		prerequisitesSelect = $("select#Prerequisites")[0],
 		taskListBody = taskListBodyObject[0];
 	taskListBodyObject.empty();
 	taskListBody.append(titleBar);
@@ -18,15 +21,20 @@ function loadTasks() {
       	url: "/getTasksList?id=" + project.id,
       	timeout: 600000,
 		success: function (tasks) {
+			taskslist = tasks;
 			tasks.forEach(function (task) { 
-				let newTr = document.createElement('tr')
+				let newTr = document.createElement('tr'),
+					newOption = document.createElement('option');
 				newTr.innerHTML = '<td>'
 					+ task.name + '</a></td>  <td>' 
 					+ task.startedDate + '</td> <td>' 
 					+ task.expectedDueDate + '</td> <td>'
 					+ getTaskDifficulty(task.difficult) + '</td> <td>'
 					+ getTaskStatus(task.status) + '</td> </td>';
+				newOption.value = task.id;
+				newOption.innerHTML = task.name;
 				taskListBody.append(newTr);
+				prerequisitesSelect.append(newOption);
 				newTr.classList.add("clickable");
 				newTr.addEventListener('click', function () {
 					location.href = '/tasks/detail?id=' + task.id;
@@ -74,9 +82,11 @@ function onCreateTaskModalClosed() {
 function onCreateClick() {
 	let me = this,
 		taskModal = $("#taskCreation")[0];
-		formData = $("form").serializeArray(), data = {};
+		formData = $("form").serializeArray(), data = { "Prerequisites": [] };
 	formData.forEach(function(value){
-	    data[value.name] = value.value;
+		if (value.name === "Prerequisites") {
+			data["Prerequisites"][data["Prerequisites"].length] = value.value;
+		} else data[value.name] = value.value;
 	});
     data['TaskOwner'] = project.id;
 	$.ajax({

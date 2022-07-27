@@ -27,7 +27,7 @@ function projectInit(callback) {
 
 function onModifyClick() {
 	let me = this,
-		formData = $("form").serializeArray(), data = {};
+		formData = $("form#project-detail").serializeArray(), data = {};
 	data['id'] = me.project.id;
 	formData.forEach(function(value){
 	    data[value.name] = value.value;

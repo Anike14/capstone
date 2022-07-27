@@ -1,3 +1,5 @@
+USE db4spring
+
 DROP PROCEDURE IF EXISTS sp_update_due_date;  
 GO  
 CREATE procedure sp_update_due_date
@@ -13,12 +15,12 @@ BEGIN
 	FROM Projects AS A WHERE A.STATUS IN (0, 1)
 	
 	UPDATE Projects 
-	SET A.ExpectedDueDate = DATEADD(day, (100 - A.Progress) / B.averageProgress, A.StartedDate)
+	SET ExpectedDueDate = DATEADD(day, (100 - Progress) / averageProgress, StartedDate)
 	FROM Projects AS A INNER JOIN #ProjectIdTobeUpdated AS B
 	ON A.PID = B.PID AND B.STATUS = 1;
 
 	UPDATE Projects 
-	SET A.ExpectedDueDate = DATEADD(day, 1, A.ExpectedDueDate)
+	SET ExpectedDueDate = DATEADD(day, 1, ExpectedDueDate)
 	FROM Projects AS A INNER JOIN #ProjectIdTobeUpdated AS B
 	ON A.PID = B.PID AND B.STATUS = 0;
 	
@@ -28,12 +30,12 @@ BEGIN
 	FROM Tasks AS A WHERE A.STATUS IN (0, 1)
 	
 	UPDATE Tasks 
-	SET A.ExpectedDueDate = DATEADD(day, (100 - A.Progress) / B.averageProgress, A.StartedDate)
+	SET ExpectedDueDate = DATEADD(day, (100 - Progress) / averageProgress, StartedDate)
 	FROM Tasks AS A INNER JOIN #TaskIdTobeUpdated AS B
 	ON A.TID = B.TID AND B.STATUS = 1;
 
 	UPDATE Tasks 
-	SET A.ExpectedDueDate = DATEADD(day, 1, A.ExpectedDueDate)
+	SET ExpectedDueDate = DATEADD(day, 1, ExpectedDueDate)
 	FROM Tasks AS A INNER JOIN #TaskIdTobeUpdated AS B
 	ON A.TID = B.TID AND B.STATUS = 0;
 	

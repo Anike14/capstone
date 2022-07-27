@@ -4,7 +4,8 @@
 var task;
 
 function taskInit() {
-	let me = this;
+	let me = this,
+		prerequisitesSelect = $("select#Prerequisites")[0];
 	$.ajax({
 		type: "GET",
       	contentType: "application/json",             
@@ -18,8 +19,25 @@ function taskInit() {
 			$("#StartedDate")[0].value = task.startedDate;
 			$("#ExpectedDueDate")[0].value = task.expectedDueDate;
 			$("#Difficulty")[0].value = task.difficult;
+			
+			let disabled = false;
+			if (task.prerequisites.length === 0) {
+				$("label#PrerequisitesLabel")[0].style.display="none";
+				$("select#Prerequisites")[0].style.display="none";
+			} else {
+				task.prerequisites.forEach((prerequisite)=>{
+					if (!prerequisite.achieved) {
+						disabled = true;
+					}
+					newOption = document.createElement('option');
+					newOption.value = prerequisite.taskId;
+					newOption.innerHTML = prerequisite.taskName;
+					prerequisitesSelect.append(newOption);
+				});
+			}
 			$("#Progress")[0].value = task.progress;
 			$("#Progress")[0].min = task.progress;
+			$("#Progress")[0].disabled = disabled;
 		},
         error: function (e) {
              
@@ -29,7 +47,7 @@ function taskInit() {
 
 function onModifyClick() {
 	let me = this,
-		formData = $("form").serializeArray(), data = {};
+		formData = $("form#task-detail").serializeArray(), data = {};
 	data['id'] = me.task.id;
 	formData.forEach(function(value){
 	    data[value.name] = value.value;

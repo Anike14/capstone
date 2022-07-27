@@ -14,9 +14,9 @@
 <a id="BackToProject" href="/projects/detail?id=" class="btn">Back</a>
 <h1>The Task: </h1>
 <input id="Status" style="border: unset; font-size: 18px;"></input><br><br>
-<form id="project-detail">
+<form id="task-detail">
   <label for="TaskName">TaskName:</label>
-  <input type="text" id="TaskName" name="ProjectName"><br><br>
+  <input type="text" id="TaskName" name="TaskName"><br><br>
   <label for="StartedDate">Started Date:</label>
   <input type="date" id="StartedDate" name="StartedDate"><br><br>
   <label for="ExpectedDueDate">Expected Due Date:</label>
@@ -33,6 +33,9 @@
   <label for="Progress">Current Progress:</label>
   <input type="number" id="Progress" max="100" min="0" name="ExpectedDueDate"
   	style="width: 30px;">%<br><br>
+  <label id="PrerequisitesLabel" for="Prerequisites">Prerequisites:</label><br>
+  <select multiple id="Prerequisites" name="Prerequisites">
+  </select><br><br>
 </form>
 <button onclick="onModifyClick()">modify</button>
 </body>
