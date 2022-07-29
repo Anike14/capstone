@@ -11,6 +11,7 @@ function loadTasks() {
 	let me = this,
 		taskListBodyObject = $("table#TaskList > tbody:last-child"),
 		titleBar = $("table#TaskList > tbody:last-child > tr")[0],
+		prerequisiteLabel = $("PrerequisitesLabel")[0],
 		prerequisitesSelect = $("select#Prerequisites")[0],
 		taskListBody = taskListBodyObject[0];
 	taskListBodyObject.empty();
@@ -22,9 +23,13 @@ function loadTasks() {
       	timeout: 600000,
 		success: function (tasks) {
 			taskslist = tasks;
-			if (tasks.length === 0) 
+			if (tasks.length === 0) {
+				prerequisiteLabel.style.display = "none";
 				prerequisitesSelect.style.display = "none";
-			else prerequisitesSelect.style.display = "block";
+			} else {
+				prerequisiteLabel.style.display = "block";
+				prerequisitesSelect.style.display = "block";
+			}
 			tasks.forEach(function (task) { 
 				let newTr = document.createElement('tr'),
 					newOption = document.createElement('option');
