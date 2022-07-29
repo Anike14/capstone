@@ -1,0 +1,22 @@
+USE db4spring
+
+DROP PROCEDURE IF EXISTS sp_update_project_status;  
+GO  
+CREATE procedure sp_update_project_status
+AS
+BEGIN
+--Logic
+
+	UPDATE Projects 
+	SET Status = 0
+	WHERE NOT EXISTS (SELECT NULL FROM Tasks AS B JOIN Projects AS A ON B.TOwner = A.PID);
+    
+	UPDATE Projects 
+	SET Status = 1
+	WHERE EXISTS (SELECT NULL FROM Tasks AS B JOIN Projects AS A ON B.STATUS = 1 AND B.TOwner = A.PID);
+	
+	UPDATE Projects
+	SET Status = 2
+	WHERE NOT EXISTS (SELECT NULL FROM Tasks AS B JOIN Projects AS A ON B.STATUS IN (0, 1) AND B.TOwner = A.PID);
+	
+END
