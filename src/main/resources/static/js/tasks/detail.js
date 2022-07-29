@@ -52,6 +52,9 @@ function onModifyClick() {
 	formData.forEach(function(value){
 	    data[value.name] = value.value;
 	});
+	if (data["Progress"] === undefined) {
+		data["Progress"] = $("#Progress")[0].value;
+	}
 	$.ajax({
 		type: "POST",
       	contentType: "application/json",             

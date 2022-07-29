@@ -21,7 +21,7 @@ BEGIN
 
 	UPDATE Projects 
 	SET ExpectedDueDate = DATEADD(day, 
-		ISNULL(NULLIF(DATEDIFF(day, A.LastUpdateDate, @today), 0), 1), ExpectedDueDate)
+		ISNULL(NULLIF(DATEDIFF(day, A.LastUpdateDate, @today), 0), 0), ExpectedDueDate)
 	FROM Projects AS A INNER JOIN #ProjectIdTobeUpdated AS B
 	ON A.PID = B.PID AND B.STATUS = 0;
 	
@@ -40,7 +40,7 @@ BEGIN
 
 	UPDATE Tasks 
 	SET ExpectedDueDate = DATEADD(day, 
-		ISNULL(NULLIF(DATEDIFF(day, A.LastUpdateDate, @today), 0), 1), ExpectedDueDate)
+		ISNULL(NULLIF(DATEDIFF(day, A.LastUpdateDate, @today), 0), 0), ExpectedDueDate)
 	FROM Tasks AS A INNER JOIN #TaskIdTobeUpdated AS B
 	ON A.TID = B.TID AND B.STATUS = 0;
 
