@@ -24,7 +24,7 @@ public class ListController {
 			+ "TName AS name, "
 			+ "StartedDate AS startedDate, "
 			+ "ExpectedDueDate AS expectedDueDate, "
-			+ "Difficulty AS difficult "
+			+ "Difficulty AS difficult, "
 			+ "STATUS AS status "
 			+ "FROM Tasks WHERE TOwner IN (?)";
 	
