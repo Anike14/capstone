@@ -25,7 +25,8 @@ public class ListController {
 		+ "PName AS name, "
 		+ "StartedDate AS startedDate, "
 		+ "ExpectedDueDate AS expectedDueDate, "
-		+ "Difficulty AS difficult "
+		+ "Difficulty AS difficult, "
+		+ "STATUS AS status "
 		+ "FROM Projects WHERE POwner IN (?)";
 	
 	@GetMapping(value = "/projects")
