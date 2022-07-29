@@ -8,6 +8,7 @@ CREATE TABLE Projects (
     Difficulty INT NOT NULL,
     STATUS INT NOT NULL DEFAULT(0),
     Progress FLOAT NOT NULL DEFAULT(0),
+    LastUpdateDate DATE default GETDATE(),
     PRIMARY KEY (PID),
     FOREIGN KEY (POWNER) REFERENCES USERS(UID)
 );

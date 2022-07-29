@@ -7,7 +7,7 @@ AS
 BEGIN
 --Logic
     declare @today date;
-	set @today = getdate();
+	set @today = GETDATE();
 	
 	SELECT A.PID, A.STATUS,
 	A.Progress / ISNULL(NULLIF(DATEDIFF(day, A.StartedDate, @today), 0), 1) AS averageProgress
@@ -20,9 +20,13 @@ BEGIN
 	ON A.PID = B.PID AND B.STATUS = 1;
 
 	UPDATE Projects 
-	SET ExpectedDueDate = DATEADD(day, 1, ExpectedDueDate)
+	SET ExpectedDueDate = DATEADD(day, 
+		ISNULL(NULLIF(DATEDIFF(day, A.LastUpdateDate, @today), 0), 1), ExpectedDueDate)
 	FROM Projects AS A INNER JOIN #ProjectIdTobeUpdated AS B
 	ON A.PID = B.PID AND B.STATUS = 0;
+	
+	UPDATE Projects
+	SET LastUpdateDate = GETDATE();
 	
 	SELECT A.TID, A.STATUS,
 	A.Progress / ISNULL(NULLIF(DATEDIFF(day, A.StartedDate, @today), 0), 1) AS averageProgress
@@ -35,8 +39,12 @@ BEGIN
 	ON A.TID = B.TID AND B.STATUS = 1;
 
 	UPDATE Tasks 
-	SET ExpectedDueDate = DATEADD(day, 1, ExpectedDueDate)
+	SET ExpectedDueDate = DATEADD(day, 
+		ISNULL(NULLIF(DATEDIFF(day, A.LastUpdateDate, @today), 0), 1), ExpectedDueDate)
 	FROM Tasks AS A INNER JOIN #TaskIdTobeUpdated AS B
 	ON A.TID = B.TID AND B.STATUS = 0;
+
+	UPDATE Tasks
+	SET LastUpdateDate = GETDATE();
 	
 END

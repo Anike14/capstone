@@ -8,6 +8,7 @@ CREATE TABLE Tasks (
     Difficulty INT NOT NULL,
     STATUS INT NOT NULL DEFAULT(0),
     Progress INT NOT NULL DEFAULT(0),
+    LastUpdateDate DATE default GETDATE(),
     PRIMARY KEY (TID),
     FOREIGN KEY (TOwner) REFERENCES Projects(PID)
 );
