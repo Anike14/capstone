@@ -22,6 +22,9 @@ function loadTasks() {
       	timeout: 600000,
 		success: function (tasks) {
 			taskslist = tasks;
+			if (tasks.length === 0) 
+				prerequisitesSelect.style.display = "none";
+			else prerequisitesSelect.style.display = "block";
 			tasks.forEach(function (task) { 
 				let newTr = document.createElement('tr'),
 					newOption = document.createElement('option');
