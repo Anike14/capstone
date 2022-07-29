@@ -11,7 +11,7 @@ function loadTasks() {
 	let me = this,
 		taskListBodyObject = $("table#TaskList > tbody:last-child"),
 		titleBar = $("table#TaskList > tbody:last-child > tr")[0],
-		prerequisiteLabel = $("PrerequisitesLabel")[0],
+		prerequisiteLabel = $("#PrerequisitesLabel")[0],
 		prerequisitesSelect = $("select#Prerequisites")[0],
 		taskListBody = taskListBodyObject[0];
 	taskListBodyObject.empty();
