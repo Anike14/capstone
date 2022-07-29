@@ -25,6 +25,7 @@ public class ListController {
 			+ "StartedDate AS startedDate, "
 			+ "ExpectedDueDate AS expectedDueDate, "
 			+ "Difficulty AS difficult "
+			+ "STATUS AS status "
 			+ "FROM Tasks WHERE TOwner IN (?)";
 	
 	@GetMapping(value = "/tasks")
